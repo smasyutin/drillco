@@ -1,0 +1,27 @@
+{
+  "name": "drillco",
+  "version": "1.0.0",
+  "description": "",
+  "main": "drillco.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
+  },
+  "scripts": {
+    "grammar": "pegjs drl.pegjs drl-parser.js",
+    "test": "jasmine"
+  },
+  "author": "Serhiy Masyutin",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine-es6": "^0.1.6",
+    "karma": "^0.13.21",
+    "karma-chrome-launcher": "^0.2.2",
+    "karma-jasmine": "^0.3.7"
+  },
+  "dependencies": {
+    "argv": "0.0.2",
+    "lodash": "^4.6.1",
+    "zpad": "^0.5.0"
+  }
+}
