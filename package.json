@@ -8,6 +8,7 @@
     "test": "test"
   },
   "scripts": {
+    "start": "node drillco.js",
     "grammar": "pegjs drl.pegjs drl-parser.js",
     "test": "jasmine"
   },
