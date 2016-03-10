@@ -14,5 +14,3 @@ Now you are ready to use the tool
 From command line you can use it like
 
 `node drillco.js --source=test/test.drl --target=result.txt --x-offset=20000 --y-offset=65000`
-
-Please note `--` after `nmp start`, this is critical to pass all the other arguments to the tool.
