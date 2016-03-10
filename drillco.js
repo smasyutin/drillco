@@ -30,20 +30,26 @@ const path = require('path');
 try {
     validate(options.options);
 
+    console.info(`took ${path.resolve(__dirname, options.options['source'])}`);
+
     const Parser = require('./drl_parser.js');
     const drl = (new Parser()).parse(
         fs.readFileSync(path.resolve(__dirname, options.options['source']), 'utf8')
     );
+    console.log('...parsed');
 
     const Serializer = require('./out_serializer.js');
-    fs.writeFileSync(path.resolve(__dirname, options.options['target']),
-        (new Serializer()).serialize(drl, {
-            x: parseInt(options.options['x-offset']),
-            y: parseInt(options.options['y-offset'])
-        }),
-        'utf8');
+    const data = (new Serializer()).serialize(drl, {
+        x: parseInt(options.options['x-offset']),
+        y: parseInt(options.options['y-offset'])
+    });
+    console.log('...converted');
+
+    fs.writeFileSync(path.resolve(__dirname, options.options['target']), data, 'utf8');
+
+    console.info(`saved to ${path.resolve(__dirname, options.options['source'])}`);
 } catch (e) {
-    console.log(e);
+    console.error(e);
     process.exit(1);
 }
 
