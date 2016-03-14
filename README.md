@@ -11,6 +11,16 @@ Now you are ready to use the tool
 [nodejs site]: https://nodejs.org/en/download/stable/
 
 ## Usage
-From command line you can use it like
 
-`node drillco.js --source=test/test.drl --target=result.txt --x-offset=20000 --y-offset=65000`
+Auto-scaling to default offset (25000, 63000):
+`node drillco.js --source=test/test.drl --target=result.txt`
+
+Auto-scaling with *different* offset (29000, 65000)
+`node drillco.js --source=test/test.drl --target=result.txt --x=29000 --y=65000`
+
+No auto-scaling with default offset (25000, 63000)
+`node drillco.js --source=test/test.drl --target=result.txt --auto-scale=false`
+
+No auto-scaling with *different* offset (29000, 65000)
+`node drillco.js --source=test/test.drl --target=result.txt --auto-scale=false --x=29000 --y=65000`
+

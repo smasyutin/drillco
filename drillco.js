@@ -1,53 +1,37 @@
 "use strict";
 
-const argv = require( 'argv' );
-const options = argv.option([
-    {
-        name: 'source',
-        short: 's',
-        type: 'string, path'
-    },
-    {
-        name: 'target',
-        short: 'o',
-        type: 'string, path'
-    },
-    {
-        name: 'x-offset',
-        short: 'x',
-        type: 'string'
-    },
-    {
-        name: 'y-offset',
-        short: 'y',
-        type: 'string'
-    }
-]).run();
+const argv = require( 'yargs')
+    .demand(['source', 'target'])
+    .boolean('auto-scale').default('auto-scale', true)
+    .default('x', 25000)
+    .default('y', 63000)
+    .argv;
 
 const fs = require('fs');
 const path = require('path');
 
 try {
-    validate(options.options);
+    validate(argv);
 
-    console.info(`took ${path.resolve(__dirname, options.options['source'])}`);
+    console.info(`took ${path.resolve(__dirname, argv['source'])}`);
 
     const Parser = require('./drl_parser.js');
     const drl = (new Parser()).parse(
-        fs.readFileSync(path.resolve(__dirname, options.options['source']), 'utf8')
+        fs.readFileSync(path.resolve(__dirname, argv['source']), 'utf8')
     );
     console.log('...parsed');
 
     const Serializer = require('./out_serializer.js');
     const data = (new Serializer()).serialize(drl, {
-        x: parseInt(options.options['x-offset']),
-        y: parseInt(options.options['y-offset'])
+        x: parseInt(argv['x']),
+        y: parseInt(argv['y']),
+        scale: argv['auto-scale']
     });
     console.log('...converted');
 
-    fs.writeFileSync(path.resolve(__dirname, options.options['target']), data, 'utf8');
+    fs.writeFileSync(path.resolve(__dirname, argv['target']), data, 'utf8');
 
-    console.info(`saved to ${path.resolve(__dirname, options.options['source'])}`);
+    console.info(`saved to ${path.resolve(__dirname, argv['source'])}`);
 } catch (e) {
     console.error(e);
     process.exit(1);
@@ -56,8 +40,8 @@ try {
 function validate(options) {
     fileExists(path.resolve(__dirname, options['source']));
     isNotEmpty(options['target']);
-    isNumeric(options['x-offset']);
-    isNumeric(options['y-offset']);
+    isNumeric(options['x']);
+    isNumeric(options['y']);
 }
 
 function fileExists(file) {

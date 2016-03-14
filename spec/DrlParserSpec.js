@@ -1,4 +1,4 @@
-import { DrlParser } from '../drl_parser'
+const DrlParser = require('../drl_parser.js');
 
 describe("DrlParser", () => {
     let parser;

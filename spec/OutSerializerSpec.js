@@ -1,4 +1,4 @@
-import { OutSerializer } from '../out_serializer'
+const OutSerializer = require('../out_serializer.js');
 
 describe("OutSerializer", () => {
     let serializer;
