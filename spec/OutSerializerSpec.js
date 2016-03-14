@@ -6,6 +6,73 @@ describe("OutSerializer", () => {
     beforeAll(() => {
         serializer = new OutSerializer();
     });
+
+    it("test real content: auto-scale at 25000, 63000 offset", () => {
+        expect(
+            serializer.serialize(
+                {
+                    "header": [
+                        {
+                            "tool": 1,
+                            "c": 3
+                        },
+                        {
+                            "tool": 2,
+                            "c": 6.2
+                        }
+                    ],
+                    "toolset": [
+                        {
+                            "tool": 1,
+                            "path": [
+                                {
+                                    "x": 5925,
+                                    "y": 34420
+                                },
+                                {
+                                    "x": 5925,
+                                    "y": 42420
+                                },
+                                {
+                                    "x": 12175,
+                                    "y": 42420
+                                }
+                            ]
+                        },
+                        {
+                            "tool": 2,
+                            "path": [
+                                {
+                                    "x": 7500,
+                                    "y": 34925
+                                },
+                                {
+                                    "x": 9000,
+                                    "y": 38425
+                                },
+                                {
+                                    "x": 7500,
+                                    "y": 41825
+                                },
+                                {
+                                    "x": 10500,
+                                    "y": 34925
+                                },
+                                {
+                                    "x": 10500,
+                                    "y": 41825
+                                }
+                            ]
+                        }
+                    ]
+                }, { x: 25000, y: 63000, scale: true })
+        ).toEqual(
+            "%% {T01=3.0, T02=6.2 this is 0}\nXYM50\n" +
+            "N0000X+021875Y+063000T01\nN0001X+021875Y+055000\nN0002X+028125Y+055000\n" +
+            "N0003X+023450Y+062495T02\nN0004X+024950Y+058995\nN0005X+023450Y+055595\nN0006X+026450Y+062495\nN0007X+026450Y+055595\n" +
+            "XYM30");
+    });
+
     it("test real content: 20000, 65000 offset", () => {
         expect(
             serializer.serialize(
